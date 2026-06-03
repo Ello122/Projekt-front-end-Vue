@@ -1,11 +1,13 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { RouterLink, RouterView } from 'vue-router'
+
+</script>
 
 <template>
-  <h1>You did it!</h1>
-  <p>
-    Visit <a href="https://vuejs.org/" target="_blank" rel="noopener">vuejs.org</a> to read the
-    documentation
-  </p>
+ <div class="navbar bg-base-100 shadow-sm">
+  <RouterLink to="/Tables" class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-3 rounded-full"> Reserve Table</RouterLink>
+</div>
+<RouterView />
 </template>
 
 <style scoped></style>
