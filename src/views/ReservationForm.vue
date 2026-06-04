@@ -1,71 +1,66 @@
 <script setup lang="ts">
-import {ref, onMounted} from 'vue'
-import {useRoute} from 'vue-router'
+import {ref} from 'vue'
+import XmarkIcon from '@iconify-vue/meteor-icons/xmark';
+const form = ref({name:'', date:'', hour:'', phone:'', email:''})
+const props = defineProps<{ tableId: number }>()
+const emit = defineEmits<{(c: 'close-modal'): void}>()
 
-const route = useRoute()
-const form = ref({tableId:'',date:'', hour:'', name:'', phone:'', email:''})
-
-onMounted(() =>{
-    if (route.params.id) {
-        form.value.tableId = route.params.id.toString()
-    }
-})
 
 function submit() {
-    console.log('Dane:', form.value)
+    const submittedData = {
+      tableId: props.tableId,
+      name: form.value.name,
+      date: form.value.date,
+      hour: form.value.hour,
+      phone: form.value.phone,
+      email: form.value.email,
+    }
+  console.log(submittedData)
 }
+
 </script>
 <template>
-  <div class="card bg-transparent text-primary-content w-96">
-  <div class="card-body items-center text-center">
-    <h2 class="card-title">Reservation - Table No. {{ form.tableId }}</h2>
-     <form @submit.prevent="submit">
+  <div class="modal modal-open">
+  <div class="modal-box max-w-lg shadow-2xl">
+    <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" @click="emit('close-modal')"><XmarkIcon height="1.2em" /></button>
+    <h2 class="font-bold text-lg text-center">Reservation - Table No. {{ props.tableId }}</h2>
+  <form @submit.prevent="submit" class="flex flex-col gap-1 items-center">
       
-      <div>
-        <label>Name:</label>
-        <input type="text" placeholder="Your name" class="input" v-model="form.name" required/>
-      </div>
+    <div class="mb-3 w-full flex flex-col items-center">
+      <label class="block mb-2">Name:</label>
+      <input type="text" placeholder="Your name" class="input" v-model="form.name" required/>
+    </div>
       
-    <div>
-        <label>Date:</label>
+    <div class="mb-3 w-full flex flex-col items-center">
+        <label class="block mb-2">Date:</label>
         <input type="date" class="input" v-model="form.date" required/>
+    </div>
 
-      </div>
+    <div class="mb-3 w-full flex flex-col items-center">
+      <label class="block mb-2">Hour:</label>
+      <input type="time" class="input" v-model="form.hour" required/>
+    </div>
 
-      <div>
-        <label>Hour:</label>
-        <input type="time" class="input" v-model="form.hour" required/>
-      </div>
-
-    <div>
-    <label>Phone Number:</label>
-    <label class="input input-bordered flex items-center gap-2">
-        <svg class="h-5 w-5 opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none">
-        <path d="M7.25 11.5C6.83579 11.5 6.5 11.8358 6.5 12.25C6.5 12.6642 6.83579 13 7.25 13H8.75C9.16421 13 9.5 12.6642 9.5 12.25C9.5 11.8358 9.16421 11.5 8.75 11.5H7.25Z" fill="currentColor"></path>
-        <path fill-rule="evenodd" clip-rule="evenodd" d="M6 1C4.61929 1 3.5 2.11929 3.5 3.5V12.5C3.5 13.8807 4.61929 15 6 15H10C11.3807 15 12.5 13.8807 12.5 12.5V3.5C12.5 2.11929 11.3807 1 10 1H6ZM10 2.5H9.5V3C9.5 3.27614 9.27614 3.5 9 3.5H7C6.72386 3.5 6.5 3.27614 6.5 3V2.5H6C5.44771 2.5 5 2.94772 5 3.5V12.5C5 13.0523 5.44772 13.5 6 13.5H10C10.5523 13.5 11 13.0523 11 12.5V3.5C11 2.94772 10.5523 2.5 10 2.5Z" fill="currentColor"></path>
-        </svg>
+    <div class="mb-3 w-full flex flex-col items-center">
+    <label class="block mb-2">Phone:</label>
+        <label class="input input-bordered">
         <input type="tel" placeholder="Phone" v-model="form.phone" required />
         </label>
     </div>
 
-    <label>Email Address:</label>
-    <label class="input validator">
-        <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-        <g stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" fill="none" stroke="currentColor">
-        <rect width="20" height="16" x="2" y="4" rx="2"></rect>
-        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
-        </g>
-        </svg>
+    <div class="mb-3 w-full flex flex-col items-center">
+    <label class="block mb-2">Email Address:</label>
+        <label class="input validator">
         <input type="email" placeholder="mail@site.com" v-model="form.email" required />
     </label>
+    </div>
     <div class="validator-hint hidden">Enter valid email address</div>
 
-    <input type="hidden" v-model="form.tableId" />
-
-    <div class="card-actions justify-center">
-      <button type="submit" class="btn btn-primary">Reserve Table</button>
+    <div class="mt-4 modal-action">
+      <button type="submit" class="btn btn-active btn-success">Reserve Table</button>
     </div>
-    </form> 
+  
+  </form> 
   </div>
 </div>
 </template>

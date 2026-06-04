@@ -1,10 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Tables from '@/views/Tables.vue'
+import Tables from '@/views/TablesView.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/Tables',
+      path: '/TablesView',
       name: 'Tables',
       component: Tables,
     }

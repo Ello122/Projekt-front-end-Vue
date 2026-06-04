@@ -3,7 +3,7 @@ import { ref, watch } from 'vue'
 import ReservationForm from './ReservationForm.vue';
 </script>
 <template>
-    <ReservationForm>
-        
-    </ReservationForm>
+<ReservationForm>
+    
+</ReservationForm>
 </template>
